@@ -1,6 +1,6 @@
 from django.db import models
 
-
+# 小说或文章标签类型
 class ArtTag(models.Model):
     title = models.CharField(max_length=20,
                              verbose_name='作品类别',
