@@ -17,7 +17,7 @@
             border-radius: 5px;
         }
         #tag_nav .tag_all{
-            background-color: powderblue;
+            background-color: red;
         }
         #tag_nav .add_novel{
             background-color: yellow;
@@ -66,6 +66,27 @@
         .pagination .active{
             background-color: palevioletred;
         }
+
+        #searchKey {
+            padding: 10px;
+            font-size: 1.2em;
+        }
+
+        .btn {
+            display: inline-block;
+            height: 45px;
+            width: 100px;
+            border: 1px solid lightgray;
+            text-align: center;
+            line-height: 45px;
+            cursor: pointer;
+
+            border-radius: 8px;
+        }
+
+        .btn:hover {
+            background-color: lightblue;
+        }
     </style>
 </head>
 <body>
@@ -77,6 +98,7 @@
         <span class="btn btn-defalut" onclick="search()">搜索</span>
     </form>
 </div>
+<br>
 <div id="tag_nav">
     <b>标签分类:</b>
     <a href="/art/" {% if tag_id == 0 %} class="tag_all" {% endif %} >所有</a>

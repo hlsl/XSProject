@@ -16,7 +16,7 @@ class Art(models.Model):
     author = models.CharField(max_length=50, blank=True, verbose_name='作者')
     summary = models.TextField(verbose_name='概述')
     # imgurl = models.CharField(max_length=100)
-    img = models.ImageField(upload_to='images', verbose_name='文章的图片')
+    img = models.ImageField(upload_to='images', verbose_name='文章的图片', default='/static/images/nocover.jpg')
 
 
     counter = models.IntegerField(default=0, verbose_name='阅读次数')

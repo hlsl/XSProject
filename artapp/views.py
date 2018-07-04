@@ -1,7 +1,6 @@
 from django.core.paginator import Paginator
-from django.http import HttpResponse
-from django.http import JsonResponse
 from django.shortcuts import render, redirect
+
 from artapp.models import ArtTag,Art
 
 
@@ -24,6 +23,10 @@ def index(request):
     # 分页器Paginator
     paginator = Paginator(arts, 3)
 
+    # 判断当前的分类id是否大于最大分类id
+
+
+
     # 获取第pageNum页
     # 判断当前的页面是否大于最大页数
     if pageNum > paginator.num_pages:
@@ -32,7 +35,7 @@ def index(request):
         pageNum = 1
     page = paginator.page(pageNum)
 
-
+    # print(tag_id)
 
     # 返回渲染模板
     return render(request, 'art/list.html',

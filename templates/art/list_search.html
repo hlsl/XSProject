@@ -4,10 +4,6 @@
     <meta charset="UTF-8">
     <title>文章列表页面</title>
     <style>
-        #tag_nav{
-            padding: 5px;
-            font-size: 20px;
-        }
         #tag_nav a{
             text-decoration: none;
             cursor: pointer;
@@ -15,12 +11,6 @@
             background-color: lightblue;
             border: 1px solid blue;
             border-radius: 5px;
-        }
-        #tag_nav .tag_all{
-            background-color: powderblue;
-        }
-        #tag_nav .add_novel{
-            background-color: yellow;
         }
         #art_container{
             list-style: none;
@@ -105,16 +95,5 @@
     {% endif %}
 </div>
 
-<script>
-    function search() {
-        var searchDOM = document.getElementById('searchKey')
-        if (searchDOM.value.trim().length == 0){
-            alert('请输入搜索的内容');
-        }else{
-            // 获取当前页面的第一个form标签,并提交表单
-            document.forms[0].submit();  // 打开form的action请求
-        }
-    }
-</script>
 </body>
 </html>
