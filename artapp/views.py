@@ -86,37 +86,3 @@ def list_tags(request):
                       'tags': ArtTag.objects.all()
                   })
 
-
-def add_novel(request):
-    data = {
-        'status': '1',
-        'msg': 'ok',
-    }
-
-    if request.method == 'POST':
-        # 获取浏览器表单提交的小说数据
-        title = request.POST.get('title')
-        author = request.POST.get('author')
-        summary = request.POST.get('summary')
-        img = request.POST.get('img')
-
-        if title:
-            # 添加
-            try:
-                novel = Art()
-                novel.title = title
-                novel.author = author
-                novel.summary = summary
-                novel.img = img
-                novel.save()
-
-                return render(request, 'art/succeed.html')
-            except:
-                data['status'] = '-1'
-                data['msg'] = '添加失败'
-                return render(request, 'art/novel.html')
-        else:
-            return render(request, 'art/novel.html')
-    # GET
-    else:
-        return render(request, 'art/novel.html', data)
