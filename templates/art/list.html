@@ -19,6 +19,9 @@
         #tag_nav .tag_all{
             background-color: powderblue;
         }
+        #tag_nav .add_novel{
+            background-color: yellow;
+        }
         #art_container{
             list-style: none;
         }
@@ -39,15 +42,12 @@
             display: block;
 
         }
-        #art_container:after{
+        #art_container:after {
             content: '';
             display: block;
             height: 0;
             overflow: hidden;
             clear: both;
-        }
-        .add_novel{
-            background-color: yellow;
         }
         .pagination{
             background-color: lightgoldenrodyellow;
@@ -72,9 +72,9 @@
 <h1>文章列表</h1>
 <div id="tag_nav">
     <b>标签分类:</b>
-    <a href="/art/" {% if tag_id == 0 %}class="tag_all"{% endif %}>所有</a>
+    <a href="/art/" {% if tag_id == 0 %} class="tag_all" {% endif %} >所有</a>
     {% for tag in tags %}
-        <a {% if tag.id == tag_id %}class="tag_all"{% endif %} href="/art/?tag={{ tag.id }}">{{ tag.title }}</a>
+        <a {% if tag.id == tag_id %} class="tag_all" {% endif %} href="/art/?tag={{ tag.id }}">{{ tag.title }}</a>
     {% endfor %}
     <a href="/art/art_edit" class="add_novel">添加小说</a>
 </div>
