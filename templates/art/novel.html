@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="static 'css/bootstrap.css'">
+    <title>添加小说</title>
+</head>
+<body>
+    <h1>添加小说</h1>
+    <div class="container">
+        <form method="post" action="/art/add_novel">
+            {% csrf_token %}
+            <div class="form-group">
+                <label>标题</label>
+                <input type="text" id="title" name="title" class="form-control"
+                placeholder="请输入小说标题">                
+            </div>
+            
+            <div class="form-group">
+                <label>作者</label>
+                <input type="text" id="author" name="author" class="form-control"
+                placeholder="请输入小说作者">                
+            </div>
+            
+            <div class="form-group">
+                <label>概要</label>
+                <textarea id="summary" name="summary" placeholder="请输入小说概要"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label>封面</label>
+                <input type="text" id="img" name="img" class="form-control"
+                placeholder="请上传小说封面">
+            </div>
+
+            <button type="submit" class="btn btn-success">添加小说</button>
+        </form>
+    </div>
+</body>
+</html>

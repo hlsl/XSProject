@@ -51,6 +51,9 @@
             overflow: hidden;
             clear: both;
         }
+        #add_novel{
+            background-color: yellow;
+        }
     </style>
 </head>
 <body>
@@ -61,6 +64,7 @@
     {% for tag in tags %}
         <a href="/art/?tag={{ tag.id }}">{{ tag.title }}</a>
     {% endfor %}
+    <a href="/art/add_novel" align="right" id="add_novel">添加小说</a>
 </div>
 
 <ul id="art_container">

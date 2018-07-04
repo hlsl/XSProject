@@ -7,5 +7,6 @@ urlpatterns = [
     url(r'^tags', add_tags),
     url(r'^list_tags', list_tags),
     url(r'^delete_tag', delete_tag),
+    url(r'^add_novel', add_novel),
     url('^', index),
 ]

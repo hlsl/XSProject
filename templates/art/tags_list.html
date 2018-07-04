@@ -1,7 +1,16 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="static 'css/bootstrap.css'">
+    <style>
+        .pagination li{
+            list-style: none;
+            float: left;
+            margin: 10px;
+        }
+    </style>
     <title>分类列表页面</title>
 </head>
 <body>
@@ -13,30 +22,46 @@
     <th>操作</th>
     </thead>
     <tbody>
-        {% for tag in tags %}
-            <tr>
-                <td>{{ forloop.counter }}</td>
-                <td>{{ tag.title }}</td>
-                <td width="100px">
-                    <a href="/art/tags?id={{ tag.id }}">编辑</a>
-                    <a onclick="del('{{ tag.id }}', '{{ tag.title }}')">删除</a>
-                </td>
-            </tr>
-        {% endfor %}
+    {% for tag in tags %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ tag.title }}</td>
+            <td width="100px">
+                <a href="/art/tags?id={{ tag.id }}">编辑</a>
+                <a onclick="del('{{ tag.id }}', '{{ tag.title }}')">删除</a>
+            </td>
+        </tr>
+    {% endfor %}
     </tbody>
     <tfoot>
-        <td>
-            <button onclick="add()">新增</button>
-        </td>
-        <td colspan="2" align="right">
-            &gt;&gt; 1 2 3 4 &lt;&lt;
-        </td>
+    <td>
+        <button onclick="add()">新增</button>
+    </td>
+    <td colspan="2" align="">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </td>
     </tfoot>
 </table>
 <script>
     function del(id, title) {
-        if (confirm('是否要删除'+title+"?")){
-            window.open('/art/delete_tag?id='+id);
+        if (confirm('是否要删除' + title + "?")) {
+            window.open('/art/delete_tag?id=' + id);
         }
     }
     function add() {
