@@ -70,21 +70,6 @@
 </head>
 <body>
 <h1>文章列表</h1>
-<div id="search">
-    <form action="/art/search" method = "post">
-        {% csrf_token %}
-        <input id="searchKey" name="searchKey" type="text" placeholder="搜索书名或者作者">
-        <span class="btn btn-defalut" onclick="search()">搜索</span>
-    </form>
-</div>
-<div id="tag_nav">
-    <b>标签分类:</b>
-    <a href="/art/" {% if tag_id == 0 %} class="tag_all" {% endif %} >所有</a>
-    {% for tag in tags %}
-        <a {% if tag.id == tag_id %} class="tag_all" {% endif %} href="/art/?tag={{ tag.id }}">{{ tag.title }}</a>
-    {% endfor %}
-    <a href="/art/art_edit" class="add_novel">添加小说</a>
-</div>
 
 <ul id="art_container">
     {% for art in arts %}

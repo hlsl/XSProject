@@ -57,3 +57,8 @@ def art_edit(request):
         return redirect('/art/')
 
 
+def search(request):
+    arts = Art.objects.filter(title=request.POST.get('searchKey'))
+    return render(request,
+                  'art/list_search.html',
+                  {'arts': arts})

@@ -10,5 +10,6 @@ urlpatterns = [
     url(r'^delete_tag', delete_tag),
 #    url(r'^add_novel', add_novel),
     url(r'^art_edit$', views_art.art_edit),
+    url(r'^search', views_art.search),  # 搜索文章
     url('^$', index),
 ]
