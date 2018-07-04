@@ -120,6 +120,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# 静态文件存放的位置
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# 多媒体文件(图片,视频,音频,表格等文件)
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/art_ups')
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
