@@ -16,13 +16,13 @@
     </div>
         <ul id="art_container">
         {% for art in arts %}
-            <li>
+            <li style="width: 160px">
                 <dl>
                     <dt>
                         <img src="{{ art.img }}" alt="" width="160" height="220">
                     </dt>
                     <dd>
-                        <label>{{ art.title }}</label>
+                        <label >{{ art.title }}</label>
                         <label>作者: {{ art.author }}</label>
                         <label>分类: {{ art.tag.title }}</label>
                     </dd>
