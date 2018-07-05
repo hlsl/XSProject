@@ -1,9 +1,15 @@
+import os
+import uuid
 from json import loads
 
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
 
+from XSProject import settings
 from userapp.forms import UserForm
 from userapp.models import UserProfile
+
 
 def regist(request):
     if request.method == 'GET':
@@ -17,8 +23,7 @@ def regist(request):
 
         # 创建UserForm的实例对象
         # 要求: 表单中指定的字段名必须和model模型中字段名保持一致
-        userForm = UserForm(request.POST,
-                            request.FILES)
+        userForm = UserForm(request.POST)
 
         # 保存之前要验证数据
         if userForm.is_valid():  # 验证通过
@@ -31,3 +36,30 @@ def regist(request):
             return render(request, 'user/regist.html',
                           {'errors': loads(userForm.errors.as_json())})
 
+
+@csrf_exempt  # 不验证scrf的token
+def upload(request):
+    # 实现图片文件上传的功能(接口)
+    # 请求方法: POST
+    # 请求参数: photo 文件类型
+
+    # 实现功能
+    # 1, 获取上传文件对象
+    uploadFile = request.FILES.get('photo')
+    print(uploadFile)
+
+    # 2. 配置文件保存的路径和文件名
+    imgDir = os.path.join(settings.MEDIA_ROOT, 'users')
+    imgFileName = str(uuid.uuid4()).replace('-', '') + '.' + uploadFile.name.split('.')[-1]
+
+    # 3.开始将上传文件内容写入到服务器中
+    with open(os.path.join(imgDir, imgFileName), 'wb') as f:
+        for chunk in uploadFile.chunks():
+            f.write(chunk)
+
+    print('文件上传成功...!')
+
+    # 响应的数据
+    # '{"status": "ok","path": "images/xxx.jpg"}'
+    return JsonResponse({'status': 'ok',
+                         'path': 'users/' + imgFileName})

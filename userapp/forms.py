@@ -29,9 +29,9 @@ class UserForm(forms.ModelForm):
         error_messages = {
             'username': {'required': '用户名不能为空', },
             'password': {'required': '密码不能为空'},
+            'password2': {'required': '确认密码不能为空'},
             'phone': {'required': '手机号不能为空'},
             'photo': {'required': '头像不能为空'},
-            'password2': {'required': '确认密码不能为空'},
         }
 
     # 验证数据(是否空)

@@ -6,9 +6,10 @@ class UserProfile(models.Model):
     username = models.CharField(max_length=50, verbose_name='用户名')
     # django的密码生成器生成 make_password
     password = models.CharField(max_length=100, verbose_name='密码')
-    phone = models.CharField(max_length=13, verbose_name='手机号码', null=True, blank=True)
+    phone = models.CharField(max_length=13, verbose_name='手机号码', null=True)
     # upload_to 指定的路径是相对于setting.py中设置的MEDIA_ROOT的路径
-    photo = models.ImageField(upload_to='users', verbose_name='头像', null=True)
+    # photo = models.ImageField(upload_to='users', verbose_name='头像', null=True)
+    photo = models.CharField(max_length=100, blank=True, null=True)
     # 注册时间
     regist_time = models.DateTimeField(auto_now_add=True, verbose_name='注册时间')
     # 最近登录时间
