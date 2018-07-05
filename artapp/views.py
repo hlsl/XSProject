@@ -21,21 +21,16 @@ def index(request):
         arts = Art.objects.filter(tag_id=tag_id).all()
 
     # 分页器Paginator
-    paginator = Paginator(arts, 3)
-
+    paginator = Paginator(arts, 100)
     # 判断当前的分类id是否大于最大分类id
-
-
 
     # 获取第pageNum页
     # 判断当前的页面是否大于最大页数
-    if pageNum > paginator.num_pages:
+    if int(pageNum) > paginator.num_pages:
         pageNum = paginator.num_pages
     elif int(pageNum) <= 0:  # 判断页码是否小于等于0
         pageNum = 1
     page = paginator.page(pageNum)
-
-    # print(tag_id)
 
     # 返回渲染模板
     return render(request, 'art/list.html',
