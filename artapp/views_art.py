@@ -1,8 +1,12 @@
+import time
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db.models import Q
-from django.shortcuts import render, redirect
-
+from django.http import HttpResponse
+from django.shortcuts import render, redirect, render_to_response
+from django.views.decorators.cache import cache_page
+from django.template import loader  # 导入模块加载器, 可以渲染模板
 from artapp.models import ArtTag, Art
+from django.core.cache import cache  # django的核心包
 
 
 # 声明针对相关请求的处理函数
@@ -69,7 +73,26 @@ def search(request):
                   {'arts': arts})
 
 
-def read(request):
-    art_id = request.POST.get('')
-    print(art_id)
-    return redirect('/art/')
+# 将页面缓存到redis中
+# @cache_page(10)
+def show(request):
+
+    id = request.GET.get('id')  # 请求参数中的数据, str
+    print('--show id--', id)
+
+    # 1.先从缓存中读取(key设计: Art-1)
+    page = cache.get('Art-%s' % id)
+    if not page:
+        time.sleep(5)
+
+        # 3.1 查询文章信息
+        art = Art.objects.get(id=id)
+
+        # 3.2 加载模板文件,并渲染成html文本
+        page = loader.render_to_string('art/art_info.html', {'art': art})
+
+        # 4. 将加载完成后的页面存放到cache中
+        # key, value, timeout
+        cache.set('Art-%s' % id, page, 10)
+
+    return HttpResponse(page)
