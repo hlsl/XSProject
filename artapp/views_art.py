@@ -3,13 +3,15 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, render_to_response
-from django.views.decorators.cache import cache_page
 from django.template import loader  # 导入模块加载器, 可以渲染模板
 from artapp.models import ArtTag, Art
 from django.core.cache import cache  # django的核心包
+from artapp.urils import cache_page, rds
 
 
 # 声明针对相关请求的处理函数
+
+
 def art_edit(request):
 
     if request.method == 'GET':
@@ -74,25 +76,37 @@ def search(request):
 
 
 # 将页面缓存到redis中
-# @cache_page(10)
+@cache_page(5)
 def show(request):
 
     id = request.GET.get('id')  # 请求参数中的数据, str
-    print('--show id--', id)
+    # print('--show id--', id)
+    # 查询文章信息
+    art = Art.objects.get(id=id)
 
-    # 1.先从缓存中读取(key设计: Art-1)
-    page = cache.get('Art-%s' % id)
-    if not page:
-        time.sleep(5)
+    # 修改文章的浏览次数
+    art.counter += 1
+    art.save()
 
-        # 3.1 查询文章信息
-        art = Art.objects.get(id=id)
+    # redis数据存储(非cache)
+    # 每次阅读都累加
+    rds.zincrby('Rank-Art', id)
 
-        # 3.2 加载模板文件,并渲染成html文本
-        page = loader.render_to_string('art/art_info.html', {'art': art})
+    return render(request, 'art/art_info.html', {'art': art})
 
-        # 4. 将加载完成后的页面存放到cache中
-        # key, value, timeout
-        cache.set('Art-%s' % id, page, 10)
 
-    return HttpResponse(page)
+def top5Art(request):
+    # (<Art (1)>, 3900)
+    # 1. 从redis中读取前5的排行
+    rank_art = rds.zrevrange('Rank-Art', 0, 4, withscores=True)
+    rank_ids = [ id.decode() for id,_ in rank_art]
+
+    # 根据ids列表,查询所有数据,并返回字典
+    # key : id
+    # value: Art类的对象
+    arts = Art.objects.in_bulk(rank_ids)
+
+    # 最终获取的阅读排行数据: [(<Art object>, socre),...]
+    top_arts = [(arts.get(int(id.decode())), score) for id, score in rank_ids]
+
+    return top_arts
