@@ -67,3 +67,9 @@ def search(request):
     return render(request,
                   'art/list_search.html',
                   {'arts': arts})
+
+
+def read(request):
+    art_id = request.POST.get('')
+    print(art_id)
+    return redirect('/art/')

@@ -131,3 +131,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/ups')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
+
+# 配置session方案(默认存在数据库中)

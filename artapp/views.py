@@ -1,7 +1,8 @@
 from django.core.paginator import Paginator
 from django.shortcuts import render, redirect
-
-from artapp.models import ArtTag,Art
+from django.http import HttpResponse, JsonResponse
+from artapp.models import ArtTag, Art
+from userapp.models import UserProfile
 
 
 def index(request):
@@ -32,13 +33,20 @@ def index(request):
         pageNum = 1
     page = paginator.page(pageNum)
 
+    # 从session中读取user_id, 获取当前登录的用户信息
+    user_id = request.session.get('user_id')
+    user = None
+    if user_id:
+        user = UserProfile.objects.get(id=user_id)
+
     # 返回渲染模板
     return render(request, 'art/list.html',
                   context={'arts': page.object_list,
                            'page_range': paginator.page_range,
                            'page': page,
                            'tag_id': int(tag_id),
-                           'tags': ArtTag.objects.all()})
+                           'tags': ArtTag.objects.all(),
+                           'user':user})
 
 
 def add_tags(request):

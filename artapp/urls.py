@@ -10,5 +10,6 @@ urlpatterns = [
     url(r'^delete_tag', delete_tag),
     url(r'^art_edit$', views_art.art_edit),
     url(r'^search', views_art.search),  # 搜索文章
+    url(r'^read', views_art.read),  # 阅读
     url('^$', index),
 ]
