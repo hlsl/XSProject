@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'artapp',
+    'userapp',
 
 ]
 
@@ -120,3 +121,30 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# 静态文件存放的位置
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+# 多媒体文件(图片,视频,音频,表格等文件)
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/ups')
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
+# 配置session方案(默认存在数据库中)
+
+
+
+# 配置Cache缓存方案--Redis
+# 安装django-redis: pip install django-redis
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://10.36.137.61:6379/XSProject',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'PASSWORD': 'redis',
+        }
+    }
+}

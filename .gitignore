@@ -1,4 +1,8 @@
 *.pyc
 .idea
 __pycache__
+<<<<<<< HEAD
 .gitigone
+=======
+.gitigonre
+>>>>>>> huyz

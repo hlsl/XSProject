@@ -1,16 +1,68 @@
+<<<<<<< HEAD
 from django.http import HttpResponse
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from artapp.models import ArtTag,Art
 
 def index(request):
+=======
+from django.core.paginator import Paginator
+from django.shortcuts import render, redirect
+from django.http import HttpResponse, JsonResponse
+from artapp.models import ArtTag, Art
+from userapp.models import UserProfile
 
 
+def index(request):
+    # 获取请求参数中的tag标签分类的id
+    tag_id = request.GET.get('tag')
+    pageNum = request.GET.get('page')
+>>>>>>> huyz
 
+    if not pageNum:
+        pageNum = 1     # 从第一页开始
+
+    # 如果tag_id不存在时,则表示为所有(即不分类型)
+    if (not tag_id) or (tag_id == '0'):
+        # 查询所有文章
+        arts = Art.objects.all()
+        tag_id = 0
+    else:
+        arts = Art.objects.filter(tag_id=tag_id).all()
+
+<<<<<<< HEAD
     # 返回渲染模板
     return render(request, 'art/list.html',
                   context={'art':Art.objects.all(),
                            'tags': ArtTag.objects.all()})
+=======
+    # 分页器Paginator
+    paginator = Paginator(arts, 100)
+    # 判断当前的分类id是否大于最大分类id
+
+    # 获取第pageNum页
+    # 判断当前的页面是否大于最大页数
+    if int(pageNum) > paginator.num_pages:
+        pageNum = paginator.num_pages
+    elif int(pageNum) <= 0:  # 判断页码是否小于等于0
+        pageNum = 1
+    page = paginator.page(pageNum)
+
+    # 从session中读取user_id, 获取当前登录的用户信息
+    user_id = request.session.get('user_id')
+    user = None
+    if user_id:
+        user = UserProfile.objects.get(id=user_id)
+
+    # 返回渲染模板
+    return render(request, 'art/list.html',
+                  context={'arts': page.object_list,
+                           'page_range': paginator.page_range,
+                           'page': page,
+                           'tag_id': int(tag_id),
+                           'tags': ArtTag.objects.all(),
+                           'user':user})
+>>>>>>> huyz
 
 
 def add_tags(request):
@@ -45,6 +97,10 @@ def delete_tag(request):
     # 重定向到列表页面
     return redirect('/art/list_tags')
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> huyz
 def list_tags(request):
     return render(request,
                   'art/tags_list.html',

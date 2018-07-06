@@ -19,5 +19,10 @@ import artapp
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+<<<<<<< HEAD
     url(r'^art/', include('artapp.urls', namespace='artapp'))
+=======
+    url(r'^art/', include('artapp.urls', namespace='artapp')),
+    url(r'^user/', include('userapp.urls', namespace='userapp'))
+>>>>>>> huyz
 ]
