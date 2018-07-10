@@ -4,8 +4,11 @@ import logging
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.db.models import Q
 from django.http import HttpResponse
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, render_to_response
 from django.template import loader  # 导入模块加载器, 可以渲染模板
+
+from artapp import tasks
 from artapp.models import ArtTag, Art
 from django.core.cache import cache  # django的核心包
 from artapp.urils import cache_page, rds, top5Art
@@ -106,3 +109,13 @@ def show(request):
                   'top_arts': top5Art()})
 
 
+def sendMsg(request):
+    to = request.GET.get('to')
+    msg = request.GET.get('msg')
+
+    # 调用发送邮件的任务
+    # delay是task的异步任务调用的函数
+    tasks.sendMail.delay(to, msg)
+
+    return JsonResponse({'status': 'ok',
+                         'msg': '任务已安排'})
