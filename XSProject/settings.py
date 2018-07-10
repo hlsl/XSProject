@@ -211,7 +211,7 @@ from celery.schedules import crontab, timedelta
 # 装载当前项目中的celery任务
 djcelery.setup_loader()
 
-BROKER_URL = 'redis://10.36.137.61:6379/10'  # 任务中间代理地址 - 任务队列
+BROKER_URL = 'redis://:redis@10.36.137.61:6379/2'  # 任务中间代理地址 - 任务队列
 
 # 导入celery任务
 CELERY_IMPORTS = ('artapp.tasks',)

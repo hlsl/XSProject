@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^art_edit$', views_art.art_edit),  # 编辑文章
     url(r'^search', views_art.search),  # 搜索文章
     url(r'^show', views_art.show),
+    url(r'^sendMsg', views_art.sendMsg),
     url('^$', index),
 ]
